@@ -400,16 +400,19 @@ class Application extends \samsoncms\Application
      * @var $delimiter
      * @var $enclosure
      */
-    public function tocsv($collection, $delimiter = ',', $enclosure = '"')
+    public function tocsv($collection, $delimiter = ',', $enclosure = '"', $fileName = null)
     {
         s()->async(true);
 
         ini_set('memory_limit', '2048M');
 
+        // Set file name
+        $fileName = $fileName ?: 'Export' . date('dmY') . '.csv';
+
         // Output file from browser
         header('Content-Description: File Transfer');
         header('Content-Type: application/vnd.ms-excel; charset=utf-8');
-        header('Content-Disposition: attachment; filename=Export'.date('dmY').'.csv');
+        header('Content-Disposition: attachment; filename=' . $fileName);
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
